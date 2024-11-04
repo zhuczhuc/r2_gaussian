@@ -369,6 +369,7 @@ if __name__ == "__main__":
     # fmt: off
     # Set up command line argument parser
     parser = ArgumentParser(description="Training script parameters")
+
     lp = ModelParams(parser)
     op = OptimizationParams(parser)
     pp = PipelineParams(parser)

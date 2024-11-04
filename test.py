@@ -141,6 +141,9 @@ def evaluate_volume(
     with open(osp.join(save_path, "eval3d.yml"), "w") as f:
         yaml.dump(eval_dict, f, default_flow_style=False, sort_keys=False)
 
+    vol_pred.cpu().numpy().tofile(osp.join(save_path, "vol_pred.raw"))
+    vol_gt.cpu().numpy().tofile(osp.join(save_path, "vol_gt.raw"))
+
     np.save(osp.join(save_path, "vol_gt.npy"), vol_gt.cpu().numpy())
     np.save(osp.join(save_path, "vol_pred.npy"), vol_pred.cpu().numpy())
     print(f"{name} complete. psnr_3d: {psnr_3d}, ssim_3d: {ssim_3d}, fps: {fps}.")

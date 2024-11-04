@@ -20,7 +20,7 @@ from r2_gaussian.utils.argument_utils import ParamGroup
 
 class ModelParams(ParamGroup):
     def __init__(self, parser, sentinel=False):
-        self._source_path = ""
+        self._source_path = r".\data\real_dataset-20241029T095646Z-002\real_dataset\cone_ntrain_25_angle_360\pine"  # zhuc debug
         self._model_path = ""
         self.data_device = "cuda"
         self.ply_path = ""  # Path to initialization point cloud (if None, we will try to find `init_*.npy`.)
@@ -44,7 +44,8 @@ class PipelineParams(ParamGroup):
 
 class OptimizationParams(ParamGroup):
     def __init__(self, parser):
-        self.iterations = 30_000
+        self.iterations = 1000  # zhuc debug
+        # self.iterations = 30_000
         self.position_lr_init = 0.0002
         self.position_lr_final = 0.00002
         self.position_lr_max_steps = 30_000
