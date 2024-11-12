@@ -64,6 +64,7 @@ def init_pcd(
         vol = recon_volume(projs, angles, copy.deepcopy(geo), recon_method)
         # show_one_volume(vol)
         vol.tofile(osp.join(osp.dirname(save_path), "vol.raw"))
+        np.save(osp.join(osp.dirname(save_path), "vol_fdk.npy"), vol)
 
         density_mask = vol > args.density_thresh
         valid_indices = np.argwhere(density_mask)
