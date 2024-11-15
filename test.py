@@ -150,6 +150,7 @@ def evaluate_volume(
     print(f"{name} complete. psnr_3d: {psnr_3d}, ssim_3d: {ssim_3d}")
 
 
+
 def evaluate_render(save_path, name, views, gaussians, pipeline):
     """Evaluate projection rendering."""
     proj_save_path = osp.join(save_path, name)

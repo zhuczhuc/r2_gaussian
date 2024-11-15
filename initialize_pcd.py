@@ -63,6 +63,8 @@ def init_pcd(
         )
         vol = recon_volume(projs, angles, copy.deepcopy(geo), recon_method)
         # show_one_volume(vol)
+        vol.tofile(osp.join(osp.dirname(save_path), "vol.raw"))
+        np.save(osp.join(osp.dirname(save_path), "vol_fdk.npy"), vol)
 
         density_mask = vol > args.density_thresh
         valid_indices = np.argwhere(density_mask)
@@ -163,7 +165,9 @@ if __name__ == "__main__":
     init_parser = InitParams(parser)
     lp = ModelParams(parser)
     pp = PipelineParams(parser)
-    parser.add_argument("--data", type=str, help="Path to data.")
+    parser.add_argument("--data", type=str, help="Path to data.",
+                        default=r"data/cios")
+                        # default = r"E:\code\github\r2_gaussian\data\real_dataset-20241029T095646Z-002\real_dataset\cone_ntrain_75_angle_360\pine")
     parser.add_argument("--output", default=None, type=str, help="Path to output.")
     parser.add_argument("--evaluate", default=False, action="store_true", help="Add this flag to evaluate quality (given GT volume, for debug only)")
     # fmt: on
