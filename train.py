@@ -18,7 +18,6 @@ from tqdm import tqdm
 from argparse import ArgumentParser
 import numpy as np
 import yaml
-import uuid
 
 sys.path.append("./")
 from r2_gaussian.arguments import ModelParams, OptimizationParams, PipelineParams
@@ -58,7 +57,7 @@ def training(
         else None
     )
     scale_bound = None
-    if dataset.scale_min and dataset.scale_max:
+    if dataset.scale_min > 0 and dataset.scale_max > 0:
         scale_bound = np.array([dataset.scale_min, dataset.scale_max]) * volume_to_world
     queryfunc = lambda x: query(
         x,
@@ -273,8 +272,8 @@ def training_report(
                                     image[0],
                                     f"{viewpoint.image_name} gt",
                                     f"{viewpoint.image_name} render",
-                                    vmin=None,
-                                    vmax=None,
+                                    vmin=gt_image[0].min() if iteration != 1 else None,
+                                    vmax=gt_image[0].max() if iteration != 1 else None,
                                     save=True,
                                 )
                             )
@@ -327,7 +326,6 @@ def training_report(
         }
         with open(osp.join(eval_save_path, "eval3d.yml"), "w") as f:
             yaml.dump(eval_dict, f, default_flow_style=False, sort_keys=False)
-        # np.save(osp.join(eval_save_path, "vol_pred.npy"), vol_gt.cpu().numpy())
         if tb_writer:
             image_show_3d = np.concatenate(
                 [

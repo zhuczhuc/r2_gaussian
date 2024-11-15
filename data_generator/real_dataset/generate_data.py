@@ -14,7 +14,7 @@ import json
 random.seed(0)
 
 sys.path.append("./")
-from r2_gaussian.utils.ct_utils import get_geometry
+from r2_gaussian.utils.ct_utils import get_geometry_tigre
 
 
 def main(args):
@@ -156,7 +156,7 @@ def main(args):
             projs.append(proj)
         projs = np.stack(projs, axis=0)
         print("reconstruct with FDK")
-        geo = get_geometry(scanner_cfg)
+        geo = get_geometry_tigre(scanner_cfg)
         ct_gt = algs.fdk(projs[:, ::-1, :], geo, angles[::skip])
         ct_gt = ct_gt.transpose((2, 1, 0))
         ct_gt[ct_gt < 0] = 0
@@ -184,7 +184,7 @@ if __name__ == "__main__":
     parser.add_argument("--output", type=str, help="Path to output.")
     parser.add_argument("--proj_subsample", default=4, type=int, help="subsample projections pixels")
     parser.add_argument("--proj_rescale", default=400.0, type=float, help="rescale projection values to fit density to around [0,1]")
-    parser.add_argument("--object_scale", default=50, type=int, help="subsample number of views as sparse-view")
+    parser.add_argument("--object_scale", default=50, type=int, help="Rescale the whole scene to similar scales as the synthetic data")
     parser.add_argument("--n_test", default=100, type=int, help="number of test")
     parser.add_argument("--n_train", default=75, type=int, help="number of train")
     
